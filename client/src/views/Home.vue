@@ -1,18 +1,18 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <button>Click mich!</button>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
   name: 'home',
-  components: {
-    HelloWorld
+  methods: {
+    createQuiz() {
+      let qID = 'r_' + Math.random().toString(36).substr(2, 9);
+      this.$router.push({name: 'quiz', params: {qID: qID}});
+    } 
   }
 }
 </script>
