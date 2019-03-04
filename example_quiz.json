@@ -1,0 +1,46 @@
+{
+    "title": "Planets",
+    "category": "Astronomy #or use ids",
+    "sub-category": "Solar astronomy/Planetary science",
+    "difficulty-level": "easy",
+    "author": "some name",
+    "creation-date": "04.03.2019",
+    "revision": "version 1",
+
+    "questions": [
+        {
+            "text": "How many planets are there in our Solar System?",
+            "type": "number",
+            "answers": ["8"]
+        },
+        {
+            "text": "How many planets are there in our Solar System?",
+            "type": "single",
+            "choices": [
+                "3",
+                "6",
+                "8",
+                "11"
+            ],
+            "answers": ["8"]
+        },
+        {
+            "text": "Which of the following choices are planets in our Solar System?",
+            "type": "multiple",
+            "choices": [
+                "Earth",
+                "Pluto",
+                "Mars",
+                "Germany",
+                "Beer"
+            ],
+            "answers": ["Earth", "Mars"]
+        },
+        {
+            "text": "Are there 8 planets in our Solar System?",
+            "type": "boolean",
+            "answers": ["true"]
+        }
+    ]
+
+}
