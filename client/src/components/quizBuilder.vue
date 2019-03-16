@@ -18,7 +18,7 @@
         </div>
         <div v-if="question.type === 'single'">
           <div v-for="answer in question.choices" v-bind:key="answer" v-bind:item="answer">
-            <input type="radio" v-bind:value="answer">
+            <input type="radio" v-bind:value="answerl">
             {{answer}}
           </div>
         </div>
@@ -68,28 +68,28 @@ export default {
     },
     acknowledgeAnswer: function(pAnswer) {
       this.qAnswers[this.questionIndex] = pAnswer;
-      next();
+      this.next();
     },
     calculateScore: function() {
       this.quizJson.questions.forEach((el, index) => {
-        results[index] = false;
+        this.results[index] = false;
         if (this.qAnswers[index].length === el.answers.length) {
           if (this.qAnswers[index].length === 1 && el.answers.length === 1) {
-            if (compareQNA(this.qAnswers[index], el.answers[0])) {
-              results[index] = true;
+            if (this.compareQNA(this.qAnswers[index], el.answers[0])) {
+              this.results[index] = true;
             }
           }
           if (this.qAnswers[index].length === 0 && el.answers.length === 0) {
-            results[index] = true;
+            this.results[index] = true;
           }
           if(this.qAnswers[index].length > 1) {
-            if(compareMultiple(this.qAnswers[index], el.answers)) {
-              results[index] = true;
+            if(this.compareMultiple(this.qAnswers[index], el.answers)) {
+              this.results[index] = true;
             }
           }
         }
       });
-      results.forEach(el => {console.log(el)})
+      this.results.forEach(el => {console.log(el)})
     },
     compareQNA: function(pqAnswer, aAnswer) {
       return pqAnswer === aAnswer ? true : false;
