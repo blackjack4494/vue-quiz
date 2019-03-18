@@ -1,12 +1,10 @@
 
 <template>
   <div>
-    <div v-if="quizJson === null">
-      <p>Fetching Json data...</p>
-    </div>
-    <div v-else>
     <p>Title: {{quizJson.title}}</p>
     <p>Author: {{quizJson.author}}</p>
+    <!--<p>Question: {{quizJson.questions[0]}}</p>
+    v-on:click="index += 1"-->
     <div
       v-for="(question, index) in quizJson.questions"
       v-bind:item="question"
@@ -56,7 +54,6 @@
         v-on:click="calculateScore()"
       >calc</button>
     </div>
-    </div>
   </div>
 </template>
 
@@ -69,32 +66,14 @@ export default {
   data() {
     return {
       questionIndex: 0,
-      //quizJson: null,
-      quizJsonz: example,
+      quizJson: example,
       qAnswers: [],
       results: [],
       test: [],
       testM: ""
     };
   },
-  computed: {
-    quizJson: function () {
-      //console.log('computed')
-      return this.quizJsonz
-    }
-  },
   methods: {
-    fetchData: function () {
-      let self = this
-      const myRequest = new Request('https://raw.githubusercontent.com/blackjack4494/vue-quiz/master/example_quiz.json')
-
-      fetch(myRequest)
-        .then((response) => { return response.json() })
-        .then((data) => {
-          this.quizJsonz = data
-          console.log(self.quizJsonz)
-        }).catch( error => { console.log(error); });
-    },
     next: function() {
       this.questionIndex++;
     },
@@ -152,7 +131,6 @@ export default {
   },
   mounted() {
     //debugger
-    this.fetchData()
   }
 };
 </script>
