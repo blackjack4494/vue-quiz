@@ -13,11 +13,8 @@
       v-bind:key="question[index]"
     >
       <div v-show="index === questionIndex">
-        <p>Question:{{ question.text }}</p>
         <div v-if="question.type === 'number'">
-          <!--Put a number here:
-          <input type="text" placeholder="put a number here" v-model="testM">-->
-          <number/>
+          <number :question="question" v-on:question-answered="testM = $event"/>
         </div>
         <div v-if="question.type === 'single'">
           <div v-for="answer in question.choices" v-bind:key="answer" v-bind:item="answer">
