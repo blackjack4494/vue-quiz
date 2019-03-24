@@ -15,8 +15,9 @@
       <div v-show="index === questionIndex">
         <p>Question:{{ question.text }}</p>
         <div v-if="question.type === 'number'">
-          Put a number here:
-          <input type="text" placeholder="put a number here" v-model="testM">
+          <!--Put a number here:
+          <input type="text" placeholder="put a number here" v-model="testM">-->
+          <number/>
         </div>
         <div v-if="question.type === 'single'">
           <div v-for="answer in question.choices" v-bind:key="answer" v-bind:item="answer">
@@ -63,6 +64,7 @@
 <script>
 //import { json } from 'body-parser';
 import example from "@/example_quiz.json";
+import number from '@/components/subcomponents/qtype-number.vue'
 // @ is an alias to /src
 export default {
   name: "home",
@@ -76,6 +78,9 @@ export default {
       test: [],
       testM: ""
     };
+  },
+  components: {
+    number
   },
   computed: {
     quizJson: function () {
