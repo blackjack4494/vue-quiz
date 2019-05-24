@@ -6,6 +6,7 @@
     "author": "some name",
     "creation-date": "04.03.2019",
     "revision": "version 1",
+    "options": ["timer", "highscore", "ranked"],
 
     "questions": [
         {

@@ -13,27 +13,18 @@
       v-bind:key="question[index]"
     >
       <div v-show="index === questionIndex">
+        <p>Question: {{question.text}}</p>
         <div v-if="question.type === 'number'">
           <number :question="question" v-on:question-answered="testM = $event"/>
         </div>
         <div v-if="question.type === 'single'">
-          <div v-for="answer in question.choices" v-bind:key="answer" v-bind:item="answer">
-            <input type="radio" v-bind:value="answer" v-model="testM">
-            {{answer}}
-          </div>
+          <single :question="question" v-on:question-answered="testM = $event" />
         </div>
         <div v-if="question.type === 'multiple'">
-          <div v-for="answer in question.choices" v-bind:key="answer" v-bind:item="answer">
-            <input type="checkbox" v-bind:value="answer" v-model="test">
-            {{answer}}
-          </div>
+          <multiple :question="question" v-on:question-answered="test = $event" />
         </div>
         <div v-if="question.type === 'boolean'">
-          Choose true or false:
-          <br>
-          <input type="radio" value="true" v-model="testM">true
-          <br>
-          <input type="radio" value="false" v-model="testM">false
+          <boolean :question="question" v-on:question-answered="testM = $event" />
         </div>
         <!--v-on:click="acknowledgeAnswer(answer)-->
         <button v-if="questionIndex > 0" v-on:click="back">go back</button>
@@ -61,7 +52,10 @@
 <script>
 //import { json } from 'body-parser';
 import example from "@/example_quiz.json";
-import number from '@/components/subcomponents/qtype-number.vue'
+import number from '@/components/subcomponents/qtype-number.vue';
+import single from '@/components/subcomponents/qtype-single.vue';
+import multiple from '@/components/subcomponents/qtype-multiple.vue';
+import boolean from '@/components/subcomponents/qtype-boolean.vue';
 // @ is an alias to /src
 export default {
   name: "home",
@@ -77,7 +71,10 @@ export default {
     };
   },
   components: {
-    number
+    number,
+    single,
+    multiple,
+    boolean
   },
   computed: {
     quizJson: function () {
@@ -86,24 +83,23 @@ export default {
     }
   },
   methods: {
-    fetchData: function () {
-      let self = this
+    fetchData() {
       const myRequest = new Request('https://raw.githubusercontent.com/blackjack4494/vue-quiz/master/example_quiz.json')
 
       fetch(myRequest)
         .then((response) => { return response.json() })
         .then((data) => {
           this.quizJsonz = data
-          console.log(self.quizJsonz)
+          console.log(this.quizJsonz)
         }).catch( error => { console.log(error); });
     },
-    next: function() {
-      this.questionIndex++;
+    next() {
+      this.questionIndex+=1;
     },
-    back: function() {
-      this.questionIndex--;
+    back() {
+      this.questionIndex-=1;
     },
-    acknowledgeAnswer: function() {
+    acknowledgeAnswer() {
       if (this.test.length > 0) {
         this.qAnswers[this.questionIndex] = this.test;
         this.test = [];
@@ -113,10 +109,9 @@ export default {
       }
       this.next();
     },
-    calculateScore: function() {
+    calculateScore() {
       this.quizJson.questions.forEach((el, index) => {
         this.results[index] = false;
-        console.log("qan-length " + this.qAnswers[index].length)
         if (this.qAnswers[index].length === el.answers.length) {
           if (this.qAnswers[index].length === 1 && el.answers.length === 1) {
             if (this.compareQNA(this.qAnswers[index], el.answers)) {
@@ -143,11 +138,11 @@ export default {
         console.log("r" + index + " " + el);
       });
     },
-    compareQNA: function(pqAnswer, aAnswer) {
+    compareQNA: (pqAnswer, aAnswer) => {
       return pqAnswer[0] === aAnswer[0] ? true : false;
     },
-    compareMultiple: function(arr1, arr2) {
-      var hArray = [...new Set([...arr1, ...arr2])];
+    compareMultiple: (arr1, arr2) => {
+      let hArray = [...new Set([...arr1, ...arr2])];
       console.log(hArray);
       return hArray.length === arr2.length ? true : false;
     }

@@ -1,7 +1,5 @@
-
 <template>
   <div>
-    <p>Question: {{question.text}}</p>
     Put a number here:<input type="text" placeholder="put a number here" v-model="answer">
   </div>
 </template>
