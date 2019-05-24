@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!--<p>{{qID}}</p>-->
     <quizBuilder/>
   </div>
 </template>

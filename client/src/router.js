@@ -19,5 +19,10 @@ export default new Router({
       props: true,
       component: () => import(/* webpackChunkName: "about" */ './views/Quiz.vue')
     },
+    {
+      path: '/editor',
+      name: 'editor',
+      component: () => import(/* webpackChunkName: "about" */ './views/Editor.vue')
+    }
   ]
 })
